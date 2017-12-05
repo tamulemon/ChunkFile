@@ -28,10 +28,10 @@ namespace ChunkFile
 
             using (StreamReader sr = new StreamReader(sourceFileFullName))
             {
-                string line = null;
-
                 outputFileName = String.Format("inputFileName_{0}.{1}", chunk, extension);
                 outPutFileWriter = new StreamWriter(outputFileName);
+
+                string line = null;
 
                 while ((line = sr.ReadLine()) != null)
                 {
