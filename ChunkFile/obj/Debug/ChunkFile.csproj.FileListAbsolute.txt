@@ -1,0 +1,6 @@
+C:\git\C#\ChunkFile\ChunkFile\bin\Debug\ChunkFile.exe.config
+C:\git\C#\ChunkFile\ChunkFile\bin\Debug\ChunkFile.exe
+C:\git\C#\ChunkFile\ChunkFile\bin\Debug\ChunkFile.pdb
+C:\git\C#\ChunkFile\ChunkFile\obj\Debug\ChunkFile.csprojResolveAssemblyReference.cache
+C:\git\C#\ChunkFile\ChunkFile\obj\Debug\ChunkFile.exe
+C:\git\C#\ChunkFile\ChunkFile\obj\Debug\ChunkFile.pdb
