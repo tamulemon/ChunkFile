@@ -7,48 +7,51 @@ using System.Threading.Tasks;
 
 namespace ChunkFile
 {
-    static class ChunkFile
+    public class ChunkFileModule
     {
         public void chunkFile(string sourceFileFullName, int chunkSize)
         {
-
-            int chunkRowCount = 0;
-            int chunk = 1;
-            string inputFileName = Path.GetFileNameWithoutExtension(sourceFileFullName);
-            string extension = Path.GetExtension(sourceFileFullName);
-
-            string outputFileName;
-
             if (!File.Exists(sourceFileFullName))
             {
                 Console.WriteLine("Invalid input file.");
             }
 
-            StreamWriter outPutFileWriter;
-
             using (StreamReader sr = new StreamReader(sourceFileFullName))
             {
-                outputFileName = String.Format("inputFileName_{0}.{1}", chunk, extension);
-                outPutFileWriter = new StreamWriter(outputFileName);
+                int chunk = 1;
+                string line;
+                int chunkRowCount = 0;
+                string path = Path.GetDirectoryName(sourceFileFullName);
+                string inputFileName = Path.GetFileNameWithoutExtension(sourceFileFullName);
+                string extension = Path.GetExtension(sourceFileFullName);
+                string outputFileName = Path.Combine(path, string.Format("{0}_{1}{2}", inputFileName, chunk, extension));
 
-                string line = null;
+                StreamWriter outPutFileWriter = null;
 
                 while ((line = sr.ReadLine()) != null)
                 {
+                    if (chunkRowCount == 0)
+                    {
+                        // allow rewrite
+                        string outputPath = Path.Combine(path, string.Format("{0}_{1}{2}", inputFileName, chunk, extension));
+                        if (File.Exists(outputPath))
+                        {
+                            File.Delete(outputPath);
+                        }
+                        outPutFileWriter = new StreamWriter(outputPath, true);
+                    }
                     chunkRowCount++;
-                   
+                    outPutFileWriter.WriteLine(line);
 
                     if (chunkRowCount == chunkSize)
                     {
+                        outPutFileWriter.Close();
                         chunkRowCount = 0;
-                        yield return chunkDataTable;
-                        chunkDataTable = null;
-                    }
+                        chunk++;
+                    }  
                 }
+                outPutFileWriter.Close();
             }
-            ////return last set of data which less then chunk size
-            //if (null != chunkDataTable)
-            //    yield return chunkDataTable;
         }
     }
 }
